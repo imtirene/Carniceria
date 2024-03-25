@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <style>
+        /* Estilos básicos */
+        .container {
+            max-width: 800px; /* Ajusta el ancho máximo del contenedor */
+            margin: 0 auto; /* Centra el contenedor */
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 36px; /* Ajusta el tamaño del título "Productos" */
+            text-align: center; /* Centra el título */
+        }
+
+        .product {
+            cursor: pointer;
+            margin-bottom: 40px; /* Incrementa el espacio entre los productos */
+            text-align: center; /* Centra el contenido dentro del contenedor */
+        }
+
+        .product img {
+            max-width: 100%; /* Hace que la imagen se ajuste al ancho del contenedor */
+            height: auto; /* Mantiene la proporción de aspecto de la imagen */
+            display: block; /* Evita el espacio extra debajo de la imagen */
+            margin: 0 auto 10px; /* Alinea la imagen al centro y agrega espacio debajo */
+        }
+
+        .description {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Productos</h1> <!-- Aquí se mostrará el título -->
+        <div id="gallery" class="gallery">
+            <!-- Aquí se mostrarán las imágenes de los productos -->
+        </div>
+    </div>
+
+    <script>
+        // Obtener referencia a la galería
+        const gallery = document.getElementById('gallery');
+
+        // Precios para cada imagen
+        const precios = [
+            2,  // Imagen 1
+            15, // Imagen 2
+            10, // Imagen 3
+            // Agrega más precios aquí para las imágenes 4, 5, 6, etc.
+        ];
+
+        // Crear productos del 1 al 48, excluyendo las imágenes 7, 35 y 42
+        for (let i = 1; i <= 48; i++) {
+            if (i !== 7 && i !== 35 && i !== 42) {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+                productDiv.innerHTML = `
+                    <img src="${i}.jpg" alt="Producto ${i}">
+                    <div class="description">
+                        <h2>Precio: $${precios[i - 1]}</h2>
+                        <p>Descripción del producto ${i}</p>
+                    </div>
+                `;
+                gallery.appendChild(productDiv);
+            }
+        }
+
+        // Agregar evento clic a cada producto para mostrar detalles
+        gallery.addEventListener('click', (event) => {
+            const product = event.target.closest('.product');
+            if (product) {
+                const description = product.querySelector('.description');
+                if (description) {
+                    // Ocultar todas las descripciones de productos
+                    const allDescriptions = gallery.querySelectorAll('.description');
+                    allDescriptions.forEach((desc) => {
+                        desc.style.display = 'none';
+                    });
+                    // Mostrar la descripción del producto clicado
+                    description.style.display = 'block';
+                }
+            }
+        });
+    </script>
+
+    <script type="module">
+      // Importa las funciones que necesitas de los SDK que necesitas
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+      // TODO: Agrega los SDK para los productos de Firebase que quieras usar
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Configuración de tu aplicación web Firebase
+      // Para Firebase JS SDK v7.20.0 y posteriores, measurementId es opcional
+      const firebaseConfig = {
+        apiKey: "AIzaSyDiREf8od1OT-NKbGOHfHRNgsa--CqFEWg",
+        authDomain: "carniceria-28490.firebaseapp.com",
+        projectId: "carniceria-28490",
+        storageBucket: "carniceria-28490.appspot.com",
+        messagingSenderId: "695017429250",
+        appId: "1:695017429250:web:0ed43485d0ad4881a10a1b",
+        measurementId: "G-9S0W360VG8"
+      };
+
+      // Inicializa Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
+</body>
+</html>
